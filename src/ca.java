@@ -17,15 +17,12 @@ import javax.swing.JPanel;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-
 /**
  * <strong>Author:</strong> Tator & SeaSee
  * <p>
  * <strong>Version:</strong> win.1.2
  */
-public class ca extends JPanel implements MouseListener, Runnable, WindowListener{
+public class ca extends JPanel implements MouseListener, Runnable {
 
     public cb cb;
     public checker ch;
@@ -119,38 +116,4 @@ public class ca extends JPanel implements MouseListener, Runnable, WindowListene
     public void mouseExited(MouseEvent e) {
 
     }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-        
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-        
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-        
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-      
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-        
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-    }
-
 }

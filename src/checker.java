@@ -36,7 +36,6 @@ public class checker extends JApplet implements WindowListener {
 
     public static boolean gameGoing;
     private JMenu helpMenu;
-public static void main(String[]args){}
     @Override
     public void init() {
         //cb = new cb(); 
@@ -125,7 +124,6 @@ public static void main(String[]args){}
         start.setTitle(resources.getString("page.start.title"));
         //Container content = start.getContentPane();
         //content.add(ca = new ca(this));
-        start.addWindowListener(ca);
 
         getContentPane().add(start.add(ca = new ca(this)));
 
