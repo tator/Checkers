@@ -20,13 +20,11 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     public fc fc;
     public pause pause;
     public checker ch;
-    private Point point1 = null, point2 = null, point3 = null, newKing = null;
+    private Point point1 = null, point2 = null, point3 = null;
     private Color yellow;
-    Thread thread;
     private int smallest, moveX = 0, moveY = 0;
     private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     public static boolean fileError = false;
-    private char newKingT = '*';
     private boolean[][] blackPiece = {
         {true, false, true, false, true, false, true, false},
         {false, true, false, true, false, true, false, true},
@@ -60,7 +58,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         fa = new fa();
         fc = new fc();
         pause = new pause(this);
-        thread = new Thread(this);
         fa.open();
         fc.open();
         if (fileError) {
@@ -109,7 +106,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         redKingMoving = false;
         checker.gameGoing = true;
         fileError = false;
-        newKingT = '*';
         moveX = 0;
         moveY = 0;
         x1 = 0;
@@ -138,9 +134,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         int height = getSize().height;
         smallest = Math.min(width, height);
 
-        if (newKing != null) {
-            System.out.println("one");
-        }
+        
 
         for (int q = 0; q <= 7; q++) {
             for (int w = 0; w <= 7; w++) {
@@ -161,30 +155,18 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
         for (int q = 0; q <= 7; q++) {
             for (int w = 0; w <= 7; w++) {
-                if (newKing != null) {
-                    System.out.print("two " + q + " " + w);
-                }
+                
                 if (blackPiece[q][w]) {
-                    if (newKing != null) {
-                        System.out.println(" black");
-                    }
+                    
                     g.setColor(Color.black);
                 } else if (redPiece[q][w]) {
 
                     
-                    if (newKing != null) {
-                        System.out.println(" red");
-                    }
+                    
                     g.setColor(Color.red);
-                } else {
-                    if (newKing != null) {
-                        System.out.println();
-                    }
                 }
                 if (blackPiece[q][w] || redPiece[q][w]) {
-                    if (newKing != null) {
-                        System.out.println("paint piece");
-                    }
+                    
                     g.fillOval(
                             ((((smallest - 2 * (smallest / 42)) / 8) * w)
                             + (smallest / 28)),
@@ -195,9 +177,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     );
                 }
                 if (blackKing[q][w] || redKing[q][w]) {
-                    if (newKing != null) {
-                        System.out.println("paint king");
-                    }
+                    
                     g.setColor(yellow);
                     g.fillOval(
                             (int) ((((smallest - 2 * (smallest / 42)) / 8)
@@ -210,63 +190,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                 }
             }
         }
-        if (newKing != null) {
-            System.out.println("three");
-        }
-        int d = 20;
-        double a = (Math.PI / 2.0) / d;
-        if (newKing != null) {
-            for (int t = 0; t <= d; t++) {
-                g.setColor(yellow);
-                g.fillOval(
-                        (int) (((((smallest - 2 * (smallest / 42)) / 8)
-                        * newKing.x) + (smallest / 16.8) + ((smallest
-                        - 2 * (smallest / 42)) / 40)
-                        - (Math.sin(a * t) * (smallest - 2
-                        * (smallest / 42)) / 40))),
-                        (int) ((((smallest - 2 * (smallest / 42)) / 8)
-                        * newKing.y) + (smallest / 16.8)),
-                        (int) ((Math.sin(a * t) * (smallest - 2
-                        * (smallest / 42)) / 20)),
-                        ((smallest - 2 * (smallest / 42)) / 20)
-                );
-                System.out.println("Oval " + t + " (" + newKing.x + "," + newKing.y + ")" + "\nV:"
-                        + smallest + "\nX: "
-                        + (int) (((((smallest - 2 * (smallest / 42.0)) / 8.0)
-                        * (5)) + (smallest / 16.8) + ((smallest - 2
-                        * (smallest / 42)) / 40)
-                        - (Math.sin(a * t) * (smallest - 2
-                        * (smallest / 42)) / 40))) + "\nY: "
-                        + (int) ((((smallest - 2 * (smallest / 42)) / 8)
-                        * (5)) + (smallest / 16.8)) + "\nW: "
-                        + (int) ((Math.sin(a * t) * (smallest - 2
-                        * (smallest / 42)) / 20)) + "\nH: "
-                        + ((smallest - 2 * (smallest / 42)) / 20) + "\nSIN: "
-                        + Math.sin(a * t) + "\nSIN & 1/2 width: "
-                        + Math.sin(a * t) * ((smallest - 2
-                        * (smallest / 42)) / 40) + "\n");
-                try {
-                    thread.stop();
-                    thread.sleep(50);
-                    thread.start();
-                } catch (Exception e) {
-                    System.out.println("Error on thread");
-                }
-            }
-            if (newKingT == 'b') {
-                blackKing[newKing.y][newKing.x] = true;
-                newKingT = '*';
-                newKing = null;
-            }
-            if (newKingT == 'r') {
-                redKing[newKing.y][newKing.x] = true;
-                newKingT = '*';
-                newKing = null;
-            }
-        }
-        if (newKing != null) {
-            System.out.println("four");
-        }
+        
         if (moving) {
             if (blackMoving) {
                 g.setColor(Color.black);
@@ -319,8 +243,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             blackJumpMove(x1, y1, false);
                         }
                         if (y2 == 7 && !blackKing[y2][x2]) {
-                            newKing = new Point(x2, y2);
-                            newKingT = 'b';
+                            blackKing[y2][x2]=ture;
                         }
                     }
                 } else if (blackKing[y1][x1]) {
@@ -351,8 +274,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             redJumpMove(x1, y1, true);
                         }
                         if (y2 == 0 && !redKing[y2][x2]) {
-                            newKing = new Point(x2, y2);
-                            newKingT = 'r';
+                            redKing[y2][x2] = true;
                         }
                     }
                 } else if (redKing[y1][x1]) {
