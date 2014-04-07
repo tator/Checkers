@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -297,7 +296,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
     }
 
-    public void move(int x1, int y1, int y2, int x2) {
+    public void move(int x1, int y1, int x2, int y2) {
         if (!playing()) {
             return;
         }
@@ -305,19 +304,19 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         } else {
             if (blackPiece[y1][x1]) {
                 if (!blackKing[y1][x1]) {
-                    if (blackPieceMovementL(x1, y1, y2, x2)) {
-                        if (blackPieceL(x1, y1, y2, x2)) {
-                            fa.fb.addRecord("Black move", x1, y1, y2, x2);
+                    if (blackPieceMovementL(x1, y1, x2, y2)) {
+                        if (blackPieceL(x1, y1, x2, y2)) {
+                            fa.fb.addRecord("Black move", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            blackMove(y1, x1, y2, x2);
-                        } else if (blackPieceJumpL(x1, y1, y2, x2, true)) {
-                            fa.fb.addRecord("Black jump", x1, y1, y2, x2);
+                            blackMove(x1, y1, x2, y2);
+                        } else if (blackPieceJumpL(x1, y1, x2, y2, true)) {
+                            fa.fb.addRecord("Black jump", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            blackJumpMove(y1, x1, true);
-                        } else if (blackPieceJumpL(x1, y1, y2, x2, false)) {
-                            fa.fb.addRecord("Black jump", x1, y1, y2, x2);
+                            blackJumpMove(x1, y1, true);
+                        } else if (blackPieceJumpL(x1, y1, x2, y2, false)) {
+                            fa.fb.addRecord("Black jump", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            blackJumpMove(y1, x1, false);
+                            blackJumpMove(x1, y1, false);
                         }
                         if (y2 == 7 && !blackKing[y2][x2]) {
                             newKing = new Point(x2, y2);
@@ -325,31 +324,31 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         }
                     }
                 } else if (blackKing[y1][x1]) {
-                    if (allKingMoveL(x1, y1, y2, x2)) {
-                        fa.fb.addRecord("Black king move", x1, y1, y2, x2);
+                    if (allKingMoveL(x1, y1, x2, y2)) {
+                        fa.fb.addRecord("Black king move", x1, y1, x2, y2);
                         fc.pieceMoved();
-                        blackKing(y1, x1, y2, x2);
-                    } else if (allKingJumpL(x1, y1, y2, x2)) {
-                        fa.fb.addRecord("Black king jump", x1, y1, y2, x2);
+                        blackKing(x1, y1, x2, y2);
+                    } else if (allKingJumpL(x1, y1, x2, y2)) {
+                        fa.fb.addRecord("Black king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
                         blackKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
                     }
                 }
             } else if (redPiece[y1][x1]) {
                 if (!redKing[y1][x1]) {
-                    if (redPieceMovementL(x1, y1, y2, x2)) {
-                        if (redPieceL(x1, y1, y2, x2)) {
-                            fa.fb.addRecord("Red move", x1, y1, y2, x2);
+                    if (redPieceMovementL(x1, y1, x2, y2)) {
+                        if (redPieceL(x1, y1, x2, y2)) {
+                            fa.fb.addRecord("Red move", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            redMove(y1, x1, y2, x2);
-                        } else if (redPieceJumpL(x1, y1, y2, x2, false)) {
-                            fa.fb.addRecord("Red jump", x1, y1, y2, x2);
+                            redMove(x1, y1, x2, y2);
+                        } else if (redPieceJumpL(x1, y1, x2, y2, false)) {
+                            fa.fb.addRecord("Red jump", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            redJumpMove(y1, x1, false);
-                        } else if (redPieceJumpL(x1, y1, y2, x2, true)) {
-                            fa.fb.addRecord("Red jump", x1, y1, y2, x2);
+                            redJumpMove(x1, y1, false);
+                        } else if (redPieceJumpL(x1, y1, x2, y2, true)) {
+                            fa.fb.addRecord("Red jump", x1, y1, x2, y2);
                             fc.pieceMoved();
-                            redJumpMove(y1, x1, true);
+                            redJumpMove(x1, y1, true);
                         }
                         if (y2 == 0 && !redKing[y2][x2]) {
                             newKing = new Point(x2, y2);
@@ -357,12 +356,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         }
                     }
                 } else if (redKing[y1][x1]) {
-                    if (allKingMoveL(x1, y1, y2, x2)) {
-                        fa.fb.addRecord("Red king move", x1, y1, y2, x2);
+                    if (allKingMoveL(x1, y1, x2, y2)) {
+                        fa.fb.addRecord("Red king move", x1, y1, x2, y2);
                         fc.pieceMoved();
-                        redKing(y1, x1, y2, x2);
-                    } else if (allKingJumpL(x1, y1, y2, x2)) {
-                        fa.fb.addRecord("Red king jump", x1, y1, y2, x2);
+                        redKing(x1, y1, x2, y2);
+                    } else if (allKingJumpL(x1, y1, x2, y2)) {
+                        fa.fb.addRecord("Red king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
                         redKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
                     }
@@ -412,29 +411,29 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         return (blackPieceScan() && redPieceScan());
     }
 
-    public boolean allKingMoveL(int x1, int y1, int y2, int x2) {
+    public boolean allKingMoveL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 + 1 && x2 == x1 + 1)
                 || (y2 == y1 + 1 && x2 == x1 - 1)
                 || (y2 == y1 - 1 && x2 == x1 - 1)
                 || (y2 == y1 - 1 && x2 == x1 + 1));
     }
 
-    public boolean allKingJumpL(int x1, int y1, int y2, int x2) {
+    public boolean allKingJumpL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 - 2 || y2 == y1 + 2)
                 && (x2 == x1 + 2 || x2 == x1 - 2));
     }
 
-    public void blackKingJumpMove(int x1, int y1, boolean d, boolean l) {
+    public void blackKingJumpMove(int x1, int y1, boolean l, boolean d) {
         int L = 0, D = 0;
         if (d) {
-            D = -1;
-        } else if (!d) {
             D = 1;
+        } else if (!d) {
+            D = -1;
         }
         if (l) {
-            L = 1;
-        } else if (!l) {
             L = -1;
+        } else if (!l) {
+            L = 1;
         }
         if (redPiece[y1 + D][x1 + L]) {
             blackKing[y1][x1] = false;
@@ -456,12 +455,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         return x2 == (x1 - 2);
     }
 
-    public boolean blackPieceMovementL(int x1, int y1, int y2, int x2) {
+    public boolean blackPieceMovementL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 + 1 || y2 == y1 + 2) && (x2 == x1 - 1 || x2 == x1 - 2
                 || x2 == x1 + 1 || x2 == x1 + 2));
     }
 
-    public boolean blackPieceJumpL(int x1, int y1, int y2, int x2, boolean l) {
+    public boolean blackPieceJumpL(int x1, int y1, int x2, int y2, boolean l) {
         if (l) {
             return ((!(y1 >= 6 || x1 <= 1)
                     && (redPiece[y1 + 1][x1 - 1]))
@@ -473,71 +472,71 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
     }
 
-    public boolean blackPieceL(int x1, int y1, int y2, int x2) {
+    public boolean blackPieceL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 + 1 && x2 == x1 + 1)
                 || (y2 == y1 + 1 && x2 == x1 - 1));
     }
 
     public void blackMove(int x1, int y1, int x2, int y2) {
-        blackPiece[x1][y1] = false;
-        blackPiece[x2][y2] = true;
+        blackPiece[y1][x1] = false;
+        blackPiece[y2][x2] = true;
     }
 
     public void blackKing(int x1, int y1, int x2, int y2) {
-        blackPiece[x1][y1] = false;
-        blackPiece[x2][y2] = true;
-        blackKing[x1][y1] = false;
-        blackKing[x2][y2] = true;
+        blackPiece[y1][x1] = false;
+        blackPiece[y2][x2] = true;
+        blackKing[y1][x1] = false;
+        blackKing[y2][x2] = true;
 
     }
 
-    public void blackJumpMove(int x1, int y1, boolean left) {
+    public void blackJumpMove(int x, int y, boolean left) {
         if (left) {
-            blackPiece[x1][y1] = false;
-            if (redKing[x1 + 1][y1 - 1]) {
-                redKing[x1 + 1][y1 - 1] = false;
+            blackPiece[y][x] = false;
+            if (redKing[y + 1][x - 1]) {
+                redKing[y + 1][x - 1] = false;
             }
-            redPiece[x1 + 1][y1 - 1] = false;
-            blackPiece[x1 + 2][y1 - 2] = true;
+            redPiece[y + 1][x - 1] = false;
+            blackPiece[y + 2][x - 2] = true;
         } else {
-            blackPiece[x1][y1] = false;
-            if (redKing[x1 + 1][y1 + 1]) {
-                redKing[x1 + 1][y1 + 1] = false;
+            blackPiece[y][x] = false;
+            if (redKing[y + 1][x + 1]) {
+                redKing[y + 1][x + 1] = false;
             }
-            redPiece[x1 + 1][y1 + 1] = false;
-            blackPiece[x1 + 2][y1 + 2] = true;
+            redPiece[y + 1][x + 1] = false;
+            blackPiece[y + 2][x + 2] = true;
         }
     }
 
     public void redJumpMove(int x, int y, boolean left) {
         if (left) {
-            redPiece[x][y] = false;
-            if (blackKing[x - 1][y - 1]) {
-                blackKing[x - 1][y - 1] = false;
+            redPiece[y][y] = false;
+            if (blackKing[y - 1][x - 1]) {
+                blackKing[y - 1][x - 1] = false;
             }
-            blackPiece[x - 1][y - 1] = false;
-            redPiece[x - 2][y - 2] = true;
+            blackPiece[y - 1][x - 1] = false;
+            redPiece[y - 2][x - 2] = true;
         } else {
-            redPiece[x][y] = false;
-            if (blackKing[x - 1][y + 1]) {
-                blackKing[x - 1][y + 1] = false;
+            redPiece[y][y] = false;
+            if (blackKing[y - 1][x + 1]) {
+                blackKing[y - 1][x + 1] = false;
             }
-            blackPiece[x - 1][y + 1] = false;
-            redPiece[x - 2][y + 2] = true;
+            blackPiece[y - 1][x + 1] = false;
+            redPiece[y - 2][x + 2] = true;
         }
     }
 
-    public void redKingJumpMove(int x1, int y1, boolean d, boolean l) {
+    public void redKingJumpMove(int x1, int y1, boolean l, boolean d) {
         int L = 0, D = 0;
         if (d) {
-            D = -1;
-        } else if (!d) {
             D = 1;
+        } else if (!d) {
+            D = -1;
         }
         if (l) {
-            L = 1;
-        } else if (!l) {
             L = -1;
+        } else if (!l) {
+            L = 1;
         }
         if (blackPiece[y1 + D][x1 + L]) {
             redKing[y1][x1] = false;
@@ -551,13 +550,13 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
     }
 
-    public boolean redPieceMovementL(int x1, int y1, int y2, int x2) {
+    public boolean redPieceMovementL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 - 1 || y2 == y1 - 2)
                 && (x2 == x1 - 1 || x2 == x1 - 2
                 || x2 == x1 + 1 || x2 == x1 + 2));
     }
 
-    public boolean redPieceJumpL(int x1, int y1, int y2, int x2, boolean l) {
+    public boolean redPieceJumpL(int x1, int y1, int x2, int y2, boolean l) {
         if (l) {
             return ((!(y1 <= 1 || x1 <= 1)
                     && (blackPiece[y1 - 1][x1 - 1]))
@@ -569,21 +568,21 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
     }
 
-    public boolean redPieceL(int x1, int y1, int y2, int x2) {
+    public boolean redPieceL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 - 1 && x2 == x1 + 1)
                 || (y2 == y1 - 1 && x2 == x1 - 1));
     }
 
     public void redMove(int x1, int y1, int x2, int y2) {
-        redPiece[x1][y1] = false;
-        redPiece[x2][y2] = true;
+        redPiece[y1][x1] = false;
+        redPiece[y2][x2] = true;
     }
 
     public void redKing(int x1, int y1, int x2, int y2) {
-        redPiece[x1][y1] = false;
-        redPiece[x2][y2] = true;
-        redKing[x1][y1] = false;
-        redKing[x2][y2] = true;
+        redPiece[y1][x1] = false;
+        redPiece[y2][x2] = true;
+        redKing[y1][x1] = false;
+        redKing[y2][x2] = true;
 
     }
 
@@ -706,7 +705,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
             }
         }
         fc.timeClicked();
-        move(x1, y1, y2, x2);
+        move(x1, y1, x2, y2);
         repaint();
         if (!playing()) {
             GameOver();
