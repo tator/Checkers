@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  * <p>
  * <strong>Version:</strong> win.1.10
  */
-public class cb extends JPanel implements MouseListener, MouseMotionListener, KeyListener, Runnable {
+public class cb extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
 
     public fa fa;
     public fc fc;
@@ -133,9 +133,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         int width = getSize().width;
         int height = getSize().height;
         smallest = Math.min(width, height);
-
-        
-
         for (int q = 0; q <= 7; q++) {
             for (int w = 0; w <= 7; w++) {
                 if ((q + w) % 2 == 1) {
@@ -157,16 +154,11 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
             for (int w = 0; w <= 7; w++) {
                 
                 if (blackPiece[q][w]) {
-                    
                     g.setColor(Color.black);
                 } else if (redPiece[q][w]) {
-
-                    
-                    
                     g.setColor(Color.red);
                 }
                 if (blackPiece[q][w] || redPiece[q][w]) {
-                    
                     g.fillOval(
                             ((((smallest - 2 * (smallest / 42)) / 8) * w)
                             + (smallest / 28)),
@@ -177,7 +169,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     );
                 }
                 if (blackKing[q][w] || redKing[q][w]) {
-                    
                     g.setColor(yellow);
                     g.fillOval(
                             (int) ((((smallest - 2 * (smallest / 42)) / 8)
@@ -215,10 +206,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
     }
 
-    @Override
-    public void run() {
-
-    }
 
     public void move(int x1, int y1, int x2, int y2) {
         if (!playing()) {
