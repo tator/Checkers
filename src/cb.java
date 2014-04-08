@@ -216,6 +216,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         int d = 20;
         double a = (Math.PI / 2.0) / d;
         if (newKing != null) {
+            thread.start();
             for (int t = 0; t <= d; t++) {
                 g.setColor(yellow);
                 g.fillOval(
@@ -246,13 +247,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         + Math.sin(a * t) * ((smallest - 2
                         * (smallest / 42)) / 40) + "\n");
                 try {
-                    thread.stop();
-                    thread.sleep(50);
-                    thread.start();
+                    thread.wait(50);
                 } catch (Exception e) {
                     System.out.println("Error on thread");
                 }
             }
+            thead.stop();
             if (newKingT == 'b') {
                 blackKing[newKing.y][newKing.x] = true;
                 newKingT = '*';
