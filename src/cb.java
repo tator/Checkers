@@ -50,7 +50,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     private boolean[][] redKing = new boolean[8][8];
     private boolean moving = false, blackMoving = false,
             redMoving = false, blackKingMoving = false,
-            redKingMoving = false, redTurn = true, blackTurn = false;
+            redKingMoving = false;
 
     public cb(checker ch) {
         this.ch = ch;
@@ -551,7 +551,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
 
         if (redPiece[y1][x1]) {
-            if(redTurn){
             moving = true;
             redMoving = true;
             redPiece[y1][x1] = false;
@@ -559,9 +558,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                 redKingMoving = true;
                 redKing[y1][x1] = false;
                 }
-            }
         } else if (blackPiece[y1][x1]) {
-            if(blackTurn){
                 moving = true;
             blackMoving = true;
             blackPiece[y1][x1] = false;
@@ -569,7 +566,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                 blackKingMoving = true;
                 blackKing[y1][x1] = false;
             }
-          }
         } else {
         }
         repaint();
@@ -590,16 +586,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     blackKingMoving = false;
                     blackKing[moveY][moveX] = true;
                 }
-                blackTurn = false;
-                redTurn = true;
             } else if (redMoving) {
                 redPiece[moveY][moveX] = true;
                 if (redKingMoving) {
                     redKingMoving = false;
                     redKing[moveY][moveX] = true;
                 }
-                blackTurn = true;
-                redTurn = false;
             }
         }
         moving = false;
