@@ -598,6 +598,8 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     redKingMoving = false;
                     redKing[moveY][moveX] = true;
                 }
+                blackTurn = true;
+                redTurn = false;
             }
         }
         moving = false;
@@ -667,9 +669,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
         checker.gameGoing = false;
     }
-    private void whoMoves(){
-        
-    }
+
     }
 
 }
