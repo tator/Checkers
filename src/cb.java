@@ -230,7 +230,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             blackJumpMove(x1, y1, false);
                         }
                         if (y2 == 7 && !blackKing[y2][x2]) {
-                            blackKing[y2][x2]=ture;
+                            blackKing[y2][x2]=true;
                         }
                     }
                 } else if (blackKing[y1][x1]) {
