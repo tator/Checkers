@@ -662,6 +662,4 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         checker.gameGoing = false;
     }
 
-    }
-
 }
