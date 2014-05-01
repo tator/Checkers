@@ -15,4 +15,3 @@
 
     To play CHECKERS run checkes.java   
                                  
-https://github.com/tator/Checkers.git
