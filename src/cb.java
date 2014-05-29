@@ -452,7 +452,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public boolean allKingLeftL(int x1, int x2) {
-        return x2 == (x1 - 2);
+        return x1 == (x2 - 2);
     }
 
     public boolean blackPieceMovementL(int x1, int y1, int x2, int y2) {
