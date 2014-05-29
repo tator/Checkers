@@ -7,7 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ResourceBundle;
+import javax.swing.AbstractButton;
 import javax.swing.JApplet;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -27,12 +29,12 @@ public class checker extends JApplet implements WindowListener {
     ca ca;
     JFrame frame;
     JFrame start;
-    ResourceBundle resources;
     private static int height;
     private static int width;
     private JMenu gameMenu;
     private JMenuBar menuBar;
     private JMenuItem menuItem;
+    private JCheckBoxMenuItem checkBox;
 
     public static boolean gameGoing;
     private JMenu helpMenu;
@@ -43,14 +45,13 @@ public class checker extends JApplet implements WindowListener {
 
         height = Toolkit.getDefaultToolkit().getScreenSize().height;
         width = Toolkit.getDefaultToolkit().getScreenSize().width;
-        resources = ResourceBundle.getBundle(getClass().getName() + "Resources");
         //setLocation(new Point(Toolkit.getDefaultToolkit().getScreenSize().height/2,Toolkit.getDefaultToolkit().getScreenSize().width/2));
 
         frame = new JFrame();
         frame.setVisible(false);
         frame.setSize(840, 840);
         frame.setLocation(100, 100);
-        frame.setTitle(resources.getString("page.main.title"));
+        frame.setTitle("Checkers");
 
         Container contentpane = frame.getContentPane();
         contentpane.add(cb = new cb(this));
@@ -99,6 +100,18 @@ public class checker extends JApplet implements WindowListener {
         });
         gameMenu.add(menuItem);
         gameMenu.addSeparator();
+        checkBox = new JCheckBoxMenuItem("Turn logic off");
+        checkBox.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean turn = ((AbstractButton)e.getSource()).getModel().isSelected();
+                if(turn){
+                    cb.offTurn();
+                }
+            }
+        });
+        
+        gameMenu.addSeparator();
 
         menuItem = new JMenuItem("Exit");
         menuItem.setMnemonic(KeyEvent.VK_E);
@@ -121,7 +134,7 @@ public class checker extends JApplet implements WindowListener {
 
         start = new JFrame();
         start.setSize(400, 300);
-        start.setTitle(resources.getString("page.start.title"));
+        start.setTitle("Checkers");
         //Container content = start.getContentPane();
         //content.add(ca = new ca(this));
 

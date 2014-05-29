@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -6,8 +7,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.util.Random;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,7 +17,7 @@ import javax.swing.JPanel;
  * <p>
  * <strong>Version:</strong> win.1.10
  */
-public class cb extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
+public class cb extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
 
     public fa fa;
     public fc fc;
@@ -23,6 +25,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     public checker ch;
     private Point point1 = null, point2 = null, point3 = null;
     private Color yellow;
+    private Random random;
     private int smallest, moveX = 0, moveY = 0;
     private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     public static boolean fileError = false;
@@ -51,22 +54,15 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     private boolean[][] redKing = new boolean[8][8];
     private boolean moving = false, blackMoving = false,
             redMoving = false, blackKingMoving = false,
-            redKingMoving = false;
+            redKingMoving = false, blackTurn, redTurn, turnON = true;
 
     public cb(checker ch) {
         this.ch = ch;
         checker.gameGoing = true;
-        fa = new fa();
-        fc = new fc();
+        random = new Random();
         pause = new pause(this);
-        fa.open();
-        fc.open();
-        if (fileError) {
-            fa = new fd();
-            fc = new ff();
-            fa.open();
-            fc.open();
-        }
+        blackTurn = random.nextBoolean();
+        redTurn = !blackTurn;
         yellow = Color.YELLOW;
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -107,6 +103,10 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         redKingMoving = false;
         checker.gameGoing = true;
         fileError = false;
+        turnON = true;
+        blackTurn = random.nextBoolean();
+        redTurn = !blackTurn;
+        JOptionPane.showMessageDialog(null, (blackTurn) ? "Black well go first" : "Red well go first");
         moveX = 0;
         moveY = 0;
         x1 = 0;
@@ -153,7 +153,6 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
         for (int q = 0; q <= 7; q++) {
             for (int w = 0; w <= 7; w++) {
-                
                 if (blackPiece[q][w]) {
                     g.setColor(Color.black);
                 } else if (redPiece[q][w]) {
@@ -182,7 +181,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                 }
             }
         }
-        
+
         if (moving) {
             if (blackMoving) {
                 g.setColor(Color.black);
@@ -207,16 +206,16 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         }
     }
 
-
     public void move(int x1, int y1, int x2, int y2) {
         if (!playing()) {
             return;
         }
         if (redPiece[y2][x2] || blackPiece[y2][x2]) {
         } else {
-            if (blackPiece[y1][x1]) {
+            if (blackPiece[y1][x1] && blackTurn) {
                 if (!blackKing[y1][x1]) {
                     if (blackPieceMovementL(x1, y1, x2, y2)) {
+                        toggleTurn();
                         if (blackPieceL(x1, y1, x2, y2)) {
                             fa.fb.addRecord("Black move", x1, y1, x2, y2);
                             fc.pieceMoved();
@@ -231,23 +230,26 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             blackJumpMove(x1, y1, false);
                         }
                         if (y2 == 7 && !blackKing[y2][x2]) {
-                            blackKing[y2][x2]=true;
+                            blackKing[y2][x2] = true;
                         }
                     }
                 } else if (blackKing[y1][x1]) {
                     if (allKingMoveL(x1, y1, x2, y2)) {
                         fa.fb.addRecord("Black king move", x1, y1, x2, y2);
                         fc.pieceMoved();
+                        toggleTurn();
                         blackKing(x1, y1, x2, y2);
                     } else if (allKingJumpL(x1, y1, x2, y2)) {
                         fa.fb.addRecord("Black king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
+                        toggleTurn();
                         blackKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
                     }
                 }
-            } else if (redPiece[y1][x1]) {
+            } else if (redPiece[y1][x1] && redTurn) {
                 if (!redKing[y1][x1]) {
                     if (redPieceMovementL(x1, y1, x2, y2)) {
+                        toggleTurn();
                         if (redPieceL(x1, y1, x2, y2)) {
                             fa.fb.addRecord("Red move", x1, y1, x2, y2);
                             fc.pieceMoved();
@@ -267,10 +269,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     }
                 } else if (redKing[y1][x1]) {
                     if (allKingMoveL(x1, y1, x2, y2)) {
+                        toggleTurn();
                         fa.fb.addRecord("Red king move", x1, y1, x2, y2);
                         fc.pieceMoved();
                         redKing(x1, y1, x2, y2);
                     } else if (allKingJumpL(x1, y1, x2, y2)) {
+                        toggleTurn();
                         fa.fb.addRecord("Red king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
                         redKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
@@ -321,6 +325,19 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         return (blackPieceScan() && redPieceScan());
     }
 
+    public void offTurn() {
+        blackTurn = true;
+        redTurn = true;
+        turnON = false;
+    }
+
+    public void toggleTurn() {
+        if (turnON) {
+            blackTurn = !blackTurn;
+            redTurn = !redTurn;
+        }
+    }
+
     public boolean allKingMoveL(int x1, int y1, int x2, int y2) {
         return ((y2 == y1 + 1 && x2 == x1 + 1)
                 || (y2 == y1 + 1 && x2 == x1 - 1)
@@ -362,7 +379,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public boolean allKingLeftL(int x1, int x2) {
-        return x1 == (x2 - 2);
+        return x2 == (x1 - 2);
     }
 
     public boolean blackPieceMovementL(int x1, int y1, int x2, int y2) {
@@ -420,14 +437,14 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
     public void redJumpMove(int x, int y, boolean left) {
         if (left) {
-            redPiece[y][y] = false;
+            redPiece[y][x] = false;
             if (blackKing[y - 1][x - 1]) {
                 blackKing[y - 1][x - 1] = false;
             }
             blackPiece[y - 1][x - 1] = false;
             redPiece[y - 2][x - 2] = true;
         } else {
-            redPiece[y][y] = false;
+            redPiece[y][x] = false;
             if (blackKing[y - 1][x + 1]) {
                 blackKing[y - 1][x + 1] = false;
             }
@@ -558,9 +575,9 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
             if (redKing[y1][x1]) {
                 redKingMoving = true;
                 redKing[y1][x1] = false;
-                }
+            }
         } else if (blackPiece[y1][x1]) {
-                moving = true;
+            moving = true;
             blackMoving = true;
             blackPiece[y1][x1] = false;
             if (blackKing[y1][x1]) {
@@ -659,7 +676,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     private void GameOver() {
-JOptionPane.showMessageDialog(null, redPieceScan()?"RED WINS":"BLACK WINS");
+        JOptionPane.showMessageDialog(null, redPieceScan()?"RED WINS":"BLACK WINS");
         checker.gameGoing = false;
     }
 
