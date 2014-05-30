@@ -27,6 +27,7 @@ public class checker extends JApplet implements WindowListener {
 
     cb cb;
     ca ca;
+    protected fs fs;
     JFrame frame;
     JFrame start;
     private static int height;
@@ -38,6 +39,7 @@ public class checker extends JApplet implements WindowListener {
 
     public static boolean gameGoing;
     private JMenu helpMenu;
+
     @Override
     public void init() {
         //cb = new cb(); 
@@ -91,26 +93,27 @@ public class checker extends JApplet implements WindowListener {
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,"Statistics: \n"
-                        + "Times Played : " +cb.fa.fb.getHist()+"\n"
-                        + "Times clicked: "+cb.fc.getTimeClicked()+"\n"
-                        + "Peaces moved : "+cb.fc.getPieceMoved()+"\n"
+                JOptionPane.showMessageDialog(null, "Statistics: \n"
+                        + "Times Played : " + cb.fa.fb.getHist() + "\n"
+                        + "Times clicked: " + cb.fc.getTimeClicked() + "\n"
+                        + "Peaces moved : " + cb.fc.getPieceMoved() + "\n"
                         + "More coming soon");
             }
         });
         gameMenu.add(menuItem);
         gameMenu.addSeparator();
         checkBox = new JCheckBoxMenuItem("Turn logic off");
-        checkBox.addActionListener(new ActionListener(){
+
+        checkBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean turn = ((AbstractButton)e.getSource()).getModel().isSelected();
-                if(turn){
+                boolean turn = ((AbstractButton) e.getSource()).getModel().isSelected();
+                if (turn) {
                     cb.offTurn();
                 }
             }
         });
-        
+        gameMenu.add(checkBox);
         gameMenu.addSeparator();
 
         menuItem = new JMenuItem("Exit");
@@ -144,10 +147,14 @@ public class checker extends JApplet implements WindowListener {
 
     public void toggleVisiblity() {
         if (frame.isVisible()) {
-            ca.start();
-            frame.setVisible(false);
+            int n = save();
+            if(n!=0){
+                ca.start();
+                frame.setVisible(false);
+            }
         } else {
             cb.start();
+            checkBox.setSelected(false);
             frame.setSize(840, 840);
             frame.setVisible(true);
         }
@@ -157,6 +164,30 @@ public class checker extends JApplet implements WindowListener {
         cb.fa.close();
         cb.fc.close();
         cb.fa.fb.close();
+    }
+
+    public int save() {
+        Object[] options = {"Cancel", "Save & Quit", "quit with out saving"};
+        int n = JOptionPane.showOptionDialog(null,
+                "Would u like to quit?",
+                "Quiting",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]);
+        System.out.println(n);
+        switch(n){
+            case 0:
+            default:    
+                return 0;
+            case 1:
+                fs = new fs(cb);
+                break;
+            case 2:
+                break;
+        }
+        return 1;
     }
 
     @Override

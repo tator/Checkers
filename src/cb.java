@@ -215,9 +215,10 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         if (redPiece[y2][x2] || blackPiece[y2][x2]) {
         } else {
             if (blackPiece[y1][x1]) {
+                //System.out.println("black \n");
                 if (!blackKing[y1][x1]) {
                     if (blackPieceMovementL(x1, y1, x2, y2)) {
-                        if (blackPieceL(x1, y1, x2, y2) &&(blackTurn && !blackDouble)) {
+                        if (blackPieceL(x1, y1, x2, y2) && (blackTurn && !blackDouble)) {
                             fa.fb.addRecord("Black move", x1, y1, x2, y2);
                             fc.pieceMoved();
                             blackMove(x1, y1, x2, y2);
@@ -236,17 +237,18 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         }
                     }
                 } else if (blackKing[y1][x1]) {
-                    if (allKingMoveL(x1, y1, x2, y2)) {
+                    if (allKingMoveL(x1, y1, x2, y2) && (blackTurn && !blackDouble)) {
                         fa.fb.addRecord("Black king move", x1, y1, x2, y2);
                         fc.pieceMoved();
                         blackKing(x1, y1, x2, y2);
-                    } else if (allKingJumpL(x1, y1, x2, y2)) {
+                    } else if (allKingJumpL(x1, y1, x2, y2) && (blackTurn || blackDouble)) {
                         fa.fb.addRecord("Black king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
                         blackKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
                     }
                 }
             } else if (redPiece[y1][x1]) {
+                //System.out.println("red \n");
                 if (!redKing[y1][x1]) {
                     if (redPieceMovementL(x1, y1, x2, y2)) {
                         if (redPieceL(x1, y1, x2, y2) && (redTurn && !redDouble)) {
@@ -267,11 +269,11 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         }
                     }
                 } else if (redKing[y1][x1]) {
-                    if (allKingMoveL(x1, y1, x2, y2)) {
+                    if (allKingMoveL(x1, y1, x2, y2) && (redTurn && !redDouble)) {
                         fa.fb.addRecord("Red king move", x1, y1, x2, y2);
                         fc.pieceMoved();
                         redKing(x1, y1, x2, y2);
-                    } else if (allKingJumpL(x1, y1, x2, y2)) {
+                    } else if (allKingJumpL(x1, y1, x2, y2) && (redTurn || redDouble)) {
                         fa.fb.addRecord("Red king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
                         redKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
@@ -336,11 +338,19 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public void blackJumpDouble() {
+        if(blackDouble){
+            noDouble();
+            return;
+        }
         redDouble = false;
         blackDouble = true;
     }
 
     public void redJumpDouble() {
+        if(redDouble){
+            noDouble();
+            return;
+        }
         redDouble = true;
         blackDouble = false;
     }
@@ -521,7 +531,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public void redMove(int x1, int y1, int x2, int y2) {
-        
+
         redPiece[y1][x1] = false;
         redPiece[y2][x2] = true;
         noDouble();
@@ -586,7 +596,12 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
                         x1 = moveX = w;
                         y1 = moveY = q;
-                        System.out.println("x1; " + x1 + " y1: " + y1);
+                        
+                        if ((x1 != x2 || y1 != y2)) {
+                            blackDouble = false;
+                            redDouble = false;
+                        }
+                        //System.out.println("x1; " + x1 + " y1: " + y1);
                     }
                 }
             }
@@ -652,8 +667,8 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         x2 = w;
                         y2 = q;
 
-                        System.out.println("x2: " + x2 + " y2: " + y2);
-                        System.out.println("black: " + blackTurn + " red: " + redTurn);
+                        //System.out.println("x2: " + x2 + " y2: " + y2);
+                        //System.out.println("black: " + blackTurn + " red: " + redTurn);
                     }
                 }
             }
