@@ -39,11 +39,15 @@ public class ca extends JPanel implements MouseListener, Runnable {
         saved.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "I'm sorry, but the diveloper is still working on this function.");
+                open();
             }
         });
 
         start();
+    }
+
+    public void open() {
+        ch.open();
     }
 
     public void start() {
@@ -99,7 +103,7 @@ public class ca extends JPanel implements MouseListener, Runnable {
     public void mousePressed(MouseEvent e) {
         active = false;
         thread.stop();
-        ch.toggleVisiblity();
+        ch.toggleVisiblity(false);
     }
 
     @Override

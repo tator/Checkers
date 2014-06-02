@@ -29,7 +29,7 @@ public class fs {
 
         }
         try {
-            x = new Formatter(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\" + name + ".txt");
+            x = new Formatter(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves\\" + name + ".txt");
             for (int a = 0; a < 4; a++) {
                 boolean[][] hold;
                 switch(a){
@@ -51,7 +51,7 @@ public class fs {
                 }
                 for(boolean[] q : hold){
                     for(boolean w :q){
-                        x.format("%d",(w)?1:0);
+                        x.format("%d\n",(w)?1:0);
                     }
                 }
             }

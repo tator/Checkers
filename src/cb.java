@@ -73,7 +73,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         repaint();
     }
 
-    public void start() {
+    public void start(boolean save) {
         blackPiece = new boolean[][]{
             {true, false, true, false, true, false, true, false},
             {false, true, false, true, false, true, false, true},
@@ -108,7 +108,9 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         blackDouble = false;
         blackTurn = random.nextBoolean();
         redTurn = !blackTurn;
-        JOptionPane.showMessageDialog(null, (blackTurn) ? "Black well go first" : "Red well go first");
+        if (!save) {
+            JOptionPane.showMessageDialog(null, (blackTurn) ? "Black well go first" : "Red well go first");
+        }
         moveX = 0;
         moveY = 0;
         x1 = 0;
@@ -338,7 +340,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public void blackJumpDouble() {
-        if(blackDouble){
+        if (blackDouble) {
             noDouble();
             return;
         }
@@ -347,7 +349,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public void redJumpDouble() {
-        if(redDouble){
+        if (redDouble) {
             noDouble();
             return;
         }
@@ -552,6 +554,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
     public void setBlackPiece(boolean[][] blackPiece) {
         this.blackPiece = blackPiece;
+
     }
 
     public boolean[][] getRedPiece() {
@@ -578,6 +581,38 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         this.redKing = redKing;
     }
 
+    public boolean getBlackTurn() {
+        return blackTurn;
+    }
+
+    public void setBlackTurn(boolean blackTurn) {
+        this.blackTurn = blackTurn;
+    }
+
+    public boolean getRedTurn() {
+        return redTurn;
+    }
+
+    public void setRedTurn(boolean redTurn) {
+        this.redTurn = redTurn;
+    }
+
+    public boolean getRedDouble() {
+        return redDouble;
+    }
+
+    public void setRedDouble(boolean redDouble) {
+        this.redDouble = redDouble;
+    }
+
+    public boolean getBlackDouble() {
+        return blackDouble;
+    }
+
+    public void setBlackDouble(boolean blackDouble) {
+        this.blackDouble = blackDouble;
+    }
+
     @Override
     public void mousePressed(MouseEvent event) {
 
@@ -596,7 +631,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
                         x1 = moveX = w;
                         y1 = moveY = q;
-                        
+
                         if ((x1 != x2 || y1 != y2)) {
                             blackDouble = false;
                             redDouble = false;
@@ -705,7 +740,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
             //System.out.println(KeyEvent.getKeyText(event.getKeyCode()));
         }
         if (("Escape".equals(KeyEvent.getKeyText(event.getKeyCode())))) {
-            ch.toggleVisiblity();
+            ch.toggleVisiblity(false);
         }
     }
 

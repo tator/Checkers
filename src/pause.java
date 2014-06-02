@@ -48,7 +48,7 @@ public class pause extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         cb.ch.closeFile();
-                        cb.start();
+                        cb.start(false);
                         setOff();
                     }
                 });
@@ -71,7 +71,7 @@ public class pause extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setOff();
-                        cb.ch.toggleVisiblity();
+                        cb.ch.toggleVisiblity(true);
                     }
                 });
 

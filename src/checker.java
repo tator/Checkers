@@ -28,6 +28,7 @@ public class checker extends JApplet implements WindowListener {
     cb cb;
     ca ca;
     protected fs fs;
+    fo fo;
     JFrame frame;
     JFrame start;
     private static int height;
@@ -70,7 +71,7 @@ public class checker extends JApplet implements WindowListener {
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cb.start();
+                cb.start(false);
             }
         });
 
@@ -122,7 +123,7 @@ public class checker extends JApplet implements WindowListener {
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                toggleVisiblity();
+                toggleVisiblity(false);
             }
         });
 
@@ -145,7 +146,7 @@ public class checker extends JApplet implements WindowListener {
 
     }
 
-    public void toggleVisiblity() {
+    public void toggleVisiblity(boolean save) {
         if (frame.isVisible()) {
             int n = save();
             if(n!=0){
@@ -153,7 +154,7 @@ public class checker extends JApplet implements WindowListener {
                 frame.setVisible(false);
             }
         } else {
-            cb.start();
+            cb.start(save);
             checkBox.setSelected(false);
             frame.setSize(840, 840);
             frame.setVisible(true);
@@ -176,7 +177,7 @@ public class checker extends JApplet implements WindowListener {
                 null,
                 options,
                 options[1]);
-        System.out.println(n);
+        //System.out.println(n);
         switch(n){
             case 0:
             default:    
@@ -189,12 +190,17 @@ public class checker extends JApplet implements WindowListener {
         }
         return 1;
     }
+    public void open(){
+        fo = new fo(cb);
+    }
 
     @Override
     public void destroy() {
+        try{
         cb.fa.close();
         cb.fc.close();
         cb.fa.fb.close();
+        }catch(Exception e){}
     }
 
     @Override
