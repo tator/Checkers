@@ -58,10 +58,10 @@ public class pause extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        JOptionPane.showMessageDialog(null,
-                                "I'm sorry, but the diveloper is still"
-                                        + " working on this function.");
                         setOff();
+                        cb.ch.justSave();
+                        cb.ch.frame.setVisible(false);
+                        cb.ch.ca.start();
                     }
                 });
         quit = new JButton("Exit");
