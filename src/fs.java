@@ -55,6 +55,11 @@ public class fs {
                     }
                 }
             }
+            x.format("%d\n",(cb.getBlackDouble())?1:0);
+            x.format("%d\n",(cb.getBlackTurn())?1:0);
+            x.format("%d\n",(cb.getRedTurn())?1:0);
+            x.format("%d\n",(cb.getRedDouble())?1:0);
+            
             x.close();
         } catch (FileNotFoundException q) {
             //throw new Error("Hist.txt failed to load and/or create");

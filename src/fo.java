@@ -55,6 +55,9 @@ public class fo {
                         break;
                 }
             }
+            cb.setBlackDouble(x.nextInt()==1);
+            cb.setTurn(x.nextInt()==1,x.nextInt()==1);
+            cb.setRedDouble(x.nextInt()==1);
             cb.repaint();
             x.close();
         } catch (FileNotFoundException q) {

@@ -234,7 +234,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             blackJumpMove(x1, y1, false);
 
                         }
-                        if (y2 == 7 && !blackKing[y2][x2]) {
+                        if (y2 == 7 &&blackPiece[y2][x2]&& !blackKing[y2][x2]) {
                             blackKing[y2][x2] = true;
                         }
                     }
@@ -246,7 +246,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     } else if (allKingJumpL(x1, y1, x2, y2) && (blackTurn || blackDouble)) {
                         fa.fb.addRecord("Black king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
-                        blackKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
+                        blackKingJumpMove(x1, y1, allKingLeftL(x1, x2), allKingDownL(y1, y2));
                     }
                 }
             } else if (redPiece[y1][x1]) {
@@ -266,7 +266,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                             fc.pieceMoved();
                             redJumpMove(x1, y1, true);
                         }
-                        if (y2 == 0 && !redKing[y2][x2]) {
+                        if (y2 == 0 && redPiece[y2][x2] && !redKing[y2][x2]) {
                             redKing[y2][x2] = true;
                         }
                     }
@@ -278,7 +278,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                     } else if (allKingJumpL(x1, y1, x2, y2) && (redTurn || redDouble)) {
                         fa.fb.addRecord("Red king jump", x1, y1, x2, y2);
                         fc.pieceMoved();
-                        redKingJumpMove(x1, y1, allKingLeftL(y1, y2), allKingDownL(x1, x2));
+                        redKingJumpMove(x1, y1, allKingLeftL(x1, x2), allKingDownL(y1, y2));
                     }
                 }
             }
@@ -379,9 +379,9 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         noDouble();
         int L = 0, D = 0;
         if (d) {
-            D = 1;
-        } else if (!d) {
             D = -1;
+        } else if (!d) {
+            D = 1;
         }
         if (l) {
             L = -1;
@@ -401,7 +401,7 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
     }
 
     public boolean allKingDownL(int y1, int y2) {
-        return y1 == (y2 - 2);
+        return y1 == (y2 + 2);
     }
 
     public boolean allKingLeftL(int x1, int x2) {
@@ -487,9 +487,9 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
         int L = 0, D = 0;
         if (d) {
-            D = 1;
-        } else if (!d) {
             D = -1;
+        } else if (!d) {
+            D = 1;
         }
         if (l) {
             L = -1;
@@ -585,17 +585,20 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
         return blackTurn;
     }
 
-    public void setBlackTurn(boolean blackTurn) {
+    public void setTurn(boolean blackTurn,boolean redTurn) {
+        if(blackTurn == redTurn){
+            blackTurn = random.nextBoolean();
+            redTurn = !blackTurn;
+        }
         this.blackTurn = blackTurn;
+        this.redTurn = redTurn;
     }
 
     public boolean getRedTurn() {
         return redTurn;
     }
 
-    public void setRedTurn(boolean redTurn) {
-        this.redTurn = redTurn;
-    }
+    
 
     public boolean getRedDouble() {
         return redDouble;
@@ -633,6 +636,9 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
                         y1 = moveY = q;
 
                         if ((x1 != x2 || y1 != y2)) {
+                            if (blackDouble || redDouble) {
+                                toggleTurn();
+                            }
                             blackDouble = false;
                             redDouble = false;
                         }
