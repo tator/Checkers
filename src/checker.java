@@ -183,7 +183,8 @@ public class checker extends JApplet implements WindowListener {
             default:    
                 return 0;
             case 1:
-                fs = new fs(cb);
+                if(!cb.fileError){
+                fs = new fs(cb);}
                 break;
             case 2:
                 break;
@@ -191,7 +192,9 @@ public class checker extends JApplet implements WindowListener {
         return 1;
     }
     public void justSave(){
-        fs = new fs(cb);
+        if(!cb.fileError){
+    
+        fs = new fs(cb);}
     }
     public void open(){
         fo = new fo(cb);

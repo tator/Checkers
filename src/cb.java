@@ -760,6 +760,8 @@ public class cb extends JPanel implements MouseListener, MouseMotionListener, Ke
 
     private void GameOver() {
         JOptionPane.showMessageDialog(null, redPieceScan() ? "RED WINS" : "BLACK WINS");
+        ch.frame.setVisible(false);
+        ch.ca.start();
         checker.gameGoing = false;
     }
 
