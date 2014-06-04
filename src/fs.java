@@ -20,8 +20,11 @@ public class fs {
 
     public fs(cb cb) {
         do {
-            name = JOptionPane.showInputDialog(null, "What is your name?\n\nYou well need to reenter this name to resume this game.").toLowerCase();
-        } while (name == null);
+            name = JOptionPane.showInputDialog(null, "What is your name?\n\nYou well need to reenter this name to resume this game.");
+            if(name == null){
+                    return;
+                }
+            } while (name.length()==0);
         File t = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves");
         if (!t.exists()) {
             File dir = new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves");
@@ -29,7 +32,7 @@ public class fs {
 
         }
         try {
-            x = new Formatter(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves\\" + name + ".txt");
+            x = new Formatter(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves\\" + name.toLowerCase() + ".txt");
             for (int a = 0; a < 4; a++) {
                 boolean[][] hold;
                 switch(a){

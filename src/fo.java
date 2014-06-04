@@ -27,7 +27,7 @@ public class fo {
             } while (name.length()==0);
             cb.ch.toggleVisiblity(true);
         try {
-            x = new Scanner(new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves\\" + name + ".txt"));
+            x = new Scanner(new File(System.getProperty("user.home") + "\\AppData\\Roaming\\Checker\\Saves\\" + name.toLowerCase() + ".txt"));
             for (int a = 0; a < 4; a++) {
                 boolean[][] hold = new boolean[8][8];
                 for (int q = 0; q < 8; q++) {
