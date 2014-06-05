@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ResourceBundle;
 import javax.swing.AbstractButton;
 import javax.swing.JApplet;
 import javax.swing.JCheckBoxMenuItem;
@@ -216,9 +215,9 @@ public class checker extends JApplet implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-
-        ca.start();
+        
         cb.pause.setOff();
+        save();
         closeFile();
     }
 
