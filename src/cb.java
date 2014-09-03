@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * <strong>Author:</strong> Tator & SeaSee
+ * <strong>Author:</strong> Tator 
  * <p>
  * <strong>Version:</strong> win.1.10
  */
