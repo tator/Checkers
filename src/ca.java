@@ -22,7 +22,7 @@ public class ca extends JPanel implements MouseListener, Runnable {
 
     public cb cb;
     public checker ch;
-    private JButton saved;
+    private JButton saved,easyAuto;
     public boolean active = true;
     private boolean flip = true;
     Thread thread;
@@ -38,7 +38,7 @@ public class ca extends JPanel implements MouseListener, Runnable {
                 open();
             }
         });
-
+        EasyAuto = new JButton
         start();
     }
 
