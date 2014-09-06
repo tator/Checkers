@@ -38,7 +38,6 @@ public class ca extends JPanel implements MouseListener, Runnable {
                 open();
             }
         });
-        EasyAuto = new JButton
         start();
     }
 
